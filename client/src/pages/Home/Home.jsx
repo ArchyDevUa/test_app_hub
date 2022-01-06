@@ -1,42 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Posts } from "../../components";
 import axios from "axios";
-
-const Wrapper = styled.div`
-  text-align: center;
-  margin-top: 20px;
-  font-size: 1.5em;
-`;
-const Title = styled.h2`
-  font-size: 2.5em;
-`;
-const Input = styled.input`
-  padding: 0.5em;
-  margin: 5px auto;
-  border-radius: 3px;
-  height: ${(props) => props.height || "40px"};
-  width: ${(props) => props.width || "400px"};
-  display: block;
-`;
-
-const TextArea = styled.textarea`
-  padding: 0.5em;
-  margin: 0px auto;
-  border-radius: 3px;
-  height: ${(props) => props.height || "40px"};
-  width: ${(props) => props.width || "402px"};
-  display: block;
-`;
-
-const Button = styled.button`
-  margin: 10px auto;
-  font-size: 1rem;
-  height: ${(props) => props.height || "40px"};
-  width: ${(props) => props.width || "100px"};
-`;
-
-
+import { StyledButton, StyledInput, StyledTextArea 
+  , StyledTitle, StyledWrapper} from "../../components";
 
 
 const Home = () => {
@@ -51,7 +17,6 @@ const Home = () => {
       setTitle("");
       setText("");
     })
-    
   }
 
   function textHandleChange(event) {
@@ -63,26 +28,26 @@ const Home = () => {
   }
 
   return (
-    <Wrapper>
+    <StyledWrapper>
       <form onSubmit={handleSubmit}>
         You are on the Home page
-        <Title>Add new Post</Title>
-        <Input
+        <StyledTitle>Add new Post</StyledTitle>
+        <StyledInput
           value={title}
           onChange={textHandleChange}
           placeholder={"Title"}
           height={"20px"}
         />
-        <TextArea
+        <StyledTextArea
           value={postText}
           onChange={titleHandleChange}
           placeholder={"Text of the post"}
           height={"80px"}
         />
-        <Button type="submit">Create a new Post</Button>
+        <StyledButton type="submit">Create a new Post</StyledButton>
       </form>
       <Posts />
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
