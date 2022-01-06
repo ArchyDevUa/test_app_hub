@@ -29,8 +29,10 @@ router.delete("/:postId", async(req, res) => {
 router.put("/:postId", async(req, res) => {
   const data = req.body;
   const postId = req.params.postId;
-  await Posts.update(data , {where : {id : postId}});
-  res.json("UPDATED SUCCESSFULLY")
+  const updatedPost = await Posts.update(data , {where : {id : postId}});
+  const post = await Posts.findByPk(req.params.postId);
+  await post.update(data)
+  res.json(post)
 })
 
 
