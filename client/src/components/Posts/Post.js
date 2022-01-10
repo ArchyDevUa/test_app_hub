@@ -1,27 +1,37 @@
 import {useState} from 'react'
 import PostEditForm from './PostEditForm';
 import PostContent from './PostContent';
+import { Delete } from "@styled-icons/fluentui-system-filled/Delete";
+import { Edit } from "@styled-icons/boxicons-regular/Edit";
 
 function Post({ post, onEdit, onDelete }) {
-  const [editMode, setEditMode] = useState(false)
+  const [editMode, setEditMode] = useState(false);
 
   const handlePostEdit = (editedContent) => {
-    onEdit(post.id, editedContent)
-    setEditMode(false)
-  }
+    onEdit(post.id, editedContent);
+    setEditMode(false);
+  };
 
   const displayedContent = editMode ? (
-    <PostEditForm titleValue={post.title} textValue={post.postText} onConfirm={handlePostEdit} />
+    <PostEditForm value={post.value} onConfirm={handlePostEdit} />
   ) : (
-    <PostContent post={post} onDelete={onDelete} onEditMode={setEditMode} />
+    <PostContent value={post.value} />
   );
-  
+
   return (
     <div>
+      {/* //Post header */}
       {displayedContent}
-      {/* ask  <button onClick={() => setEditMode(true)}>Edit</button> */}
+      {/* { add to post Header */}
+      <Delete
+        size="32px"
+        onClick={() => {
+          onDelete(post.id);
+        }}
+      />
+      <Edit size="32px" onClick={() => setEditMode(true)} />
     </div>
-  )
+  );
 }
 
 export default Post;
