@@ -1,22 +1,29 @@
 import React, { useState } from "react";
-import { Posts } from "../../components";
+import { PostsList } from "../../components";
 import axios from "axios";
-import { StyledButton, StyledInput, StyledTextArea 
-  , StyledTitle, StyledWrapper} from "../../components";
-
+import {
+  StyledButton,
+  StyledInput,
+  StyledTextArea,
+  StyledTitle,
+  StyledWrapper,
+} from "../../components";
 
 const Home = () => {
   const [title, setTitle] = useState("");
   const [postText, setText] = useState("");
-  
+  const [listOfPosts, setListOfPosts] = useState([]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const data = {title,postText,userName:"user"};
-    axios.post("http://localhost:3001/posts", data).then((response) => {
-      setTitle("");
-      setText("");
-    })
+    const data = { title, postText, userName: "user" };
+    await axios.post("http://localhost:3001/posts", data);
+    setTitle("");
+    setText("");
+    // ask
+    const newRenderData =  await axios.get("http://localhost:3001/posts");
+    setListOfPosts(newRenderData.data);
+    ;
   }
 
   function textHandleChange(event) {
@@ -46,7 +53,7 @@ const Home = () => {
         />
         <StyledButton type="submit">Create a new Post</StyledButton>
       </form>
-      <Posts />
+      <PostsList listOfPosts={listOfPosts} setListOfPosts={setListOfPosts}/>
     </StyledWrapper>
   );
 };

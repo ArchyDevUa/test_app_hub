@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledPost = styled.div`
-  width: 600px;
+  width: 400px;
   min-height:100%;
   position:relative;
   margin: 20px auto 0px;

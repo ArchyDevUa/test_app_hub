@@ -1,5 +1,6 @@
 import {useState} from 'react'
-import PostEditForm from './PostEditForm'
+import PostEditForm from './PostEditForm';
+import PostContent from './PostContent';
 
 function Post({ post, onEdit, onDelete }) {
   const [editMode, setEditMode] = useState(false)
@@ -9,13 +10,16 @@ function Post({ post, onEdit, onDelete }) {
     setEditMode(false)
   }
 
-  const displayedContent = editMode ? <PostEditForm value={post.postText} onConfirm={handlePostEdit}/> : post.postText
-
+  const displayedContent = editMode ? (
+    <PostEditForm titleValue={post.title} textValue={post.postText} onConfirm={handlePostEdit} />
+  ) : (
+    <PostContent post={post} onDelete={onDelete} onEditMode={setEditMode} />
+  );
+  
   return (
     <div>
       {displayedContent}
-
-      <button onClick={() => setEditMode(true)}>Edit</button>
+      {/* ask  <button onClick={() => setEditMode(true)}>Edit</button> */}
     </div>
   )
 }
