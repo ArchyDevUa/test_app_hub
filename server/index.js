@@ -1,18 +1,20 @@
 const express = require('express');
 const app = express();
-const cors = require('cors')
+const cors = require('cors');
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json({}));
+app.use(express.urlencoded({
+    extended : true
+}))
 
-const db = require('./models');
+const routes = require('./routes/index')(app)
 
-const postRouter = require('./routes/Posts')
-app.use("/posts", postRouter);
+app.set('port', process.env.PORT || 3001)
 
-db.sequelize.sync().then(()=> {
-  app.listen(3001, ()=>{
-    console.log('server running on port 3001')
-  })
-});
-
+const server = app.listen(app.get('port'), 
+    function(err){
+        if(err) throw err;
+        let message = 'Server is running on http://localhost:' + server.address().port;
+        console.log(message);
+    })
